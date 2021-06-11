@@ -3,6 +3,7 @@ dist/js/*
 storybook-static/*
 
 /node_modules
+/.history
 npm-debug.log
 yarn-error.log
 

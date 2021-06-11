@@ -36,6 +36,35 @@ function executeScript(code: string): void {
         });
 }
 
+/**
+ * Executes a string of Javascript on the current tab
+ * @param code The string of code to execute on the current tab
+ */
+ function executeScriptFile(code: string): void {
+  // Query for the active tab in the current window
+  browser.tabs
+      .query({ active: true, currentWindow: true })
+      .then((tabs: Tabs.Tab[]) => {
+          // Pulls current tab from browser.tabs.query response
+          const currentTab: Tabs.Tab | undefined = tabs[0];
+
+          // Short circuits function execution is current tab isn't found
+          if (!currentTab) {
+              return;
+          }
+
+          // Executes the script in the current tab
+          browser.tabs
+              .executeScript(currentTab.id, {
+                file: '/js/touchTargetScan.js',
+                allFrames: true
+              })
+              .then(() => {
+                  console.log("Done Executing");
+              });
+      });
+}
+
 // // // //
 
 export const Scroller: FunctionComponent = () => {
@@ -53,6 +82,12 @@ export const Scroller: FunctionComponent = () => {
                     onClick={(): void => executeScript(scrollToBottomScript)}
                 >
                     Scroll To Bottom
+                </button>
+                <button
+                    className="btn btn-block btn-outline-dark"
+                    onClick={(): void => executeScriptFile(scrollToBottomScript)}
+                >
+                    Scan Touch Targets
                 </button>
             </div>
         </div>
