@@ -1,11 +1,31 @@
 console.log('Beginning Scan...');
 
-const HtmlTagsToExclude = ['script', 'link', 'path', 'noscript'];
+const HtmlTagsToExclude = ['script', 'link', 'path', 'noscript', 'iframe', 'g', 'meta'];
 
 const NodeNamesToExclude = ['#text', '#comment'];
 
-let checkNode = (node: any): boolean => {
+// let searchObjectForAngularEvents = (obj: any) => {
+//   let hasAngularEvent = false;
+//   console.log('old school');
 
+//   if (obj.hasOwnProperty('__zone_symbol__clickfalse')) {
+//     return true;
+//   }
+//   return false;
+// }
+
+// let nodeHasEvents = (node: any): boolean => {
+//   // check for Angular events, object property prefixed w/ '__zone_symbol__'
+//   if (searchObjectForAngularEvents(node)) {
+//     return true;
+//   } else {
+//     return false;
+//   }
+//   return false;
+//   // check for Javascript events, i.e. 'onClick', 'onBlur', 'onFocus', etc.
+// }
+
+let checkNode = (node: any): boolean => {
   if (node.nodeName && NodeNamesToExclude.includes(node.nodeName)) {
     return false;
   } else if (node.localName && HtmlTagsToExclude.includes(node.localName)) {
@@ -14,6 +34,8 @@ let checkNode = (node: any): boolean => {
     return false;
   } else if (node.clientWidth && node.clientWidth >= 56) {
     return false;
+  // } else if (!nodeHasEvents(node)) {
+  //   return false;
   } else {
     return true;
   }
@@ -37,10 +59,10 @@ let bfsOnHTMLNodes = (node = document.body) => {
         console.log(currentNode);
       }
 
-      if (currentNode && currentNode.childNodes && currentNode.childNodes.length > 0) {
+      if (currentNode && currentNode.children && currentNode.children.length > 0) {
 
-          for (let i = 0; i < currentNode.childNodes.length; i++) {
-              queue.push(currentNode.childNodes[i]);
+          for (let i = 0; i < currentNode.children.length; i++) {
+              queue.push(currentNode.children[i]);
           }
       }
   }

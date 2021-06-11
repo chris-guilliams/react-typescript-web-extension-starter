@@ -73,18 +73,6 @@ export const Scroller: FunctionComponent = () => {
             <div className="col-lg-12">
                 <button
                     className="btn btn-block btn-outline-dark"
-                    onClick={(): void => executeScript(scrollToTopScript)}
-                >
-                    Scroll To Top
-                </button>
-                <button
-                    className="btn btn-block btn-outline-dark"
-                    onClick={(): void => executeScript(scrollToBottomScript)}
-                >
-                    Scroll To Bottom
-                </button>
-                <button
-                    className="btn btn-block btn-outline-dark"
                     onClick={(): void => executeScriptFile(scrollToBottomScript)}
                 >
                     Scan Touch Targets
